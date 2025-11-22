@@ -10,7 +10,7 @@ Clientes
             Casos_Prueba
 
 Fecha inicio < fecha estimada
-fheca final puede ser mayuor a la estimada para simular retrasos
+fecha final puede ser mayuor a la estimada para simular retrasos
 bugs y actividades debe estar dentro de fecha inicio yu fecha final
 
 70% proyectos normales con rentabilidad media, y algunos bugs
@@ -19,6 +19,9 @@ bugs y actividades debe estar dentro de fecha inicio yu fecha final
 
 si la complejidad es alta, más probabilidad de bugs 
 si complejidad es baja,  menos probabilidad de bugs
+
+10% de proyectos no estan terminados
+de los proyectos terminados, 50% justo en la fecha estimada, 25% antes y 25% después
 """
 
 
@@ -36,10 +39,11 @@ print("""
 ## --------------------------------------------------------------------------------------------------------
 
 import random, faker, time
-from datetime import date, datetime
+from datetime import date, datetime, timedelta
 import mysql.connector
 
 fake = faker.Faker("es_MX")
+fake_eng = faker.Faker("en_US")
 
 # CUANTOS DATOS VAMOS A GENERAR
 NUM_CLIENTES = 20
@@ -62,6 +66,9 @@ PAISES_HISPANOS = [
     'Venezuela', 'Costa Rica', 'Panamá', 'Guatemala', 
     'Honduras', 'El Salvador', 'Nicaragua', 'República Dominicana'
 ]
+
+### para generar nombres de proyecto viables agregamos palabras asociadas a proyectos de software para poder generar nombres más realistas
+PALABRAS_PROYECTOS = [ 'Sistema', 'Aplicación', 'Plataforma', 'Red', 'Portal', 'Gestor', 'Administrador', 'Controlador', 'Monitor', 'Analizador', 'API', 'Web']
 
 configuracion_db = {
     'user': 'root',
@@ -121,3 +128,25 @@ time.sleep(1)
 # generamos  proytectos ---------------------------------------------------------------------------------
 print("Generando datos sintéticos de Proyectos (～﹃～)~zZ")
 time.sleep(1)
+
+for i in range(1, NUM_PROYECTOS + 1):
+    #seleccionamos un cliente aleatorio
+    id_cliente = random.choice(id_cliente_creados)
+    nombre_proyecto = random.choice(PALABRAS_PROYECTOS) + ' "' + fake_eng.domain_word().title() + '"'
+    fecha_inicio = fake.date_between(start_date='-2y', end_date='today')
+    fecha_estimada = fecha_inicio + timedelta(days=random.randint(30, 180)) # todo proyecto será de uno a seis meses
+    # esta terminado?
+    if random.random() < 0.9:  # 90% de probabilidad de que el proyecto esté terminado
+        r = random.random()
+        #50% probabilidad de terminar justo en fecha
+        if r < 0.5:
+            fecha_real = fecha_estimada
+        elif r < 0.75: # 25% probabilidad de terminar antes de la fecha estimada
+            fecha_real = fecha_estimada - timedelta(days=random.randint(-10, -1))  # puede terminar hasta 10 días antes
+        else: # 25% probabilidad de terminar después de la fecha estimada
+            fecha_real = fecha_estimada + timedelta(days=random.randint(1, 20))  # puede terminar  10 antes o 20 después
+    else:
+        fecha_real = None  # proyecto no terminado
+    presupuesto = round(random.uniform(5000, 50000), 2)
+    
+    # print(f"Proyecto {i}: Cliente ID: {id_cliente}, Nombre Proyecto: {nombre_proyecto}")
