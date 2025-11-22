@@ -1,3 +1,6 @@
+CREATE DATABASE Gestion_Proyectos;
+USE Gestion_Proyectos;
+
 -- 1 okr penetración de mercado y alcance
 CREATE TABLE Clientes(
 	id_cliente INT PRIMARY KEY AUTO_INCREMENT,
@@ -25,6 +28,9 @@ CREATE TABLE Proyectos(
     complejidad VARCHAR(20), -- bajA / media / alta
     tamano_equipo INT,
     
+    -- OKR modularización
+    porcentaje_modularizacion DECIMAL(5,2),
+
     -- 3 OKR satisfacción
     nivel_satisfaccion DECIMAL(3,1),
     
@@ -44,7 +50,7 @@ CREATE TABLE Requerimientos(
 CREATE TABLE casos_prueba(
 	id_caso INT PRIMARY KEY AUTO_INCREMENT,
     id_requerimiento INT,
-    estado TINYINT(0,1), -- PASS (true) o FAIL (false)
+    estado BOOLEAN, -- PASS (true) o FAIL (false)
     FOREIGN KEY (id_requerimiento) REFERENCES Requerimientos (id_requerimiento)
 );
 
