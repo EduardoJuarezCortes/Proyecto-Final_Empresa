@@ -47,7 +47,7 @@ CREATE TABLE Requerimientos(
     FOREIGN KEY (id_proyecto) REFERENCES Proyectos(id_proyecto)
 );
 
-CREATE TABLE casos_prueba(
+CREATE TABLE Casos_Prueba(
 	id_caso INT PRIMARY KEY AUTO_INCREMENT,
     id_requerimiento INT,
     estado BOOLEAN, -- PASS (true) o FAIL (false)
