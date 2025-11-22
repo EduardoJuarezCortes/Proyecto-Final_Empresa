@@ -128,6 +128,7 @@ time.sleep(1)
 # generamos  proytectos ---------------------------------------------------------------------------------
 print("Generando datos sintéticos de Proyectos (～﹃～)~zZ")
 time.sleep(1)
+id_proyecto_creados = []
 
 for i in range(1, NUM_PROYECTOS + 1):
     #seleccionamos un cliente aleatorio
@@ -142,11 +143,46 @@ for i in range(1, NUM_PROYECTOS + 1):
         if r < 0.5:
             fecha_real = fecha_estimada
         elif r < 0.75: # 25% probabilidad de terminar antes de la fecha estimada
-            fecha_real = fecha_estimada - timedelta(days=random.randint(-10, -1))  # puede terminar hasta 10 días antes
+            fecha_real = fecha_estimada + timedelta(days=random.randint(-10, -1))  # puede terminar hasta 10 días antes
         else: # 25% probabilidad de terminar después de la fecha estimada
             fecha_real = fecha_estimada + timedelta(days=random.randint(1, 20))  # puede terminar  10 antes o 20 después
     else:
         fecha_real = None  # proyecto no terminado
-    presupuesto = round(random.uniform(5000, 50000), 2)
+    presupuesto = round(random.uniform(5000, 50000), 2) # presupuesto entre 5,000 y 50,000
+    # 70% rentabilidad media, 15% alta, 15% baja
+    if random.random() < 0.7:
+        costo_final = round(presupuesto * random.uniform(0.8,0.9),2) # entre 10 y 20 de rentabilidad
+    elif random.random() < 0.85:
+        costo_final = round(presupuesto * random.uniform(0.6,0.79),2) # más de 20 de rentabilidad con tope en 40%
+    else:
+        costo_final = round(presupuesto * random.uniform(0.91,1.2),2) # menos de 10 de rentabilidad con posibilidad de sobrecoste topando en 20
+    tamano_proyecto = random.randint(1000,150000) # en líneas de código 1000 a 10000 pequeño 10000 a 100000 mediano 100000 a 150000 grande
+    if tamano_proyecto < 10000:
+        complejidad = 'Baja'
+        tamano_equipo = random.randint(3,7)
+    elif tamano_proyecto < 100000:
+        complejidad = 'Media'
+        tamano_equipo = random.randint(7,15)
+    elif tamano_proyecto >= 100000:
+        complejidad = 'Alta'
+        tamano_equipo = random.randint(15,30)
+    porcentaje_modularizacion = round(random.uniform(25, 100), 1)  # entre 25% y 100%
+    a = random.uniform(1, 100)
+    b = random.uniform(1, 100)
+    nivel_satisfaccion = round(max(a, b), 1) # agarra el máximo de a o b para tendencia a más proyectos con alta satisfacción  
     
-    # print(f"Proyecto {i}: Cliente ID: {id_cliente}, Nombre Proyecto: {nombre_proyecto}")
+    args = (id_cliente, nombre_proyecto, fecha_inicio, fecha_estimada, fecha_real, presupuesto, costo_final, tamano_proyecto, complejidad, tamano_equipo, porcentaje_modularizacion, nivel_satisfaccion, 0) # 0 es para después obtener el id_Proyecto generado por el return del sp
+    resultado = cursor.callproc('insertar_proyecto', args)
+
+    id_proyecto_creados.append(resultado[12])
+
+    print(f"Proyecto {i}: Cliente ID:{id_cliente}, Nombre Proyecto: {nombre_proyecto}, Fecha Inicio: {fecha_inicio}, Fecha Estimada: {fecha_estimada}, Fecha Real: {fecha_real}, Presupuesto: {presupuesto}, Costo Final: {costo_final}, Tamaño Proyecto: {tamano_proyecto}, Complejidad: {complejidad}, Tamaño Equipo: {tamano_equipo}, % Modularización: {porcentaje_modularizacion}, Nivel Satisfacción: {nivel_satisfaccion}")
+
+#debug
+print("Datos sintéticos de Proyectos generados correctamente. (￣o￣) . z Z")
+print(id_proyecto_creados)
+time.sleep(1)
+
+# generamos  acctividades -------------------------------------------------------------------------------
+
+
