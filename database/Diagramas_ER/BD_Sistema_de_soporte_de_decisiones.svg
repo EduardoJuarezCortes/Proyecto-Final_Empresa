@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE svg
+PUBLIC "-//W3C//DTD SVG 1.1//EN"
+       "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg viewBox="4 453 837 903" width="833px" height="450px" xmlns="http://www.w3.org/2000/svg" version="1.1">
+   <line x1="278" y1="518" x2="268" y2="518" style="stroke:#c00;stroke-width:1;"/>
+   <line x1="115" y1="537" x2="105" y2="537" style="stroke:#c00;stroke-width:1;"/>
+   <line x1="268" y1="518" x2="115" y2="537" style="stroke:#c00;stroke-width:1;"/>
+   <line x1="270.5" y1="518" x2="274.03553390593" y2="521.53553390593" style="stroke:#c00;stroke-width:2;"/>
+   <line x1="270.5" y1="518" x2="274.03553390593" y2="514.46446609407" style="stroke:#c00;stroke-width:2;"/>
+   <line x1="110" y1="537" x2="113.53553390593" y2="540.53553390593" style="stroke:#c00;stroke-width:2;"/>
+   <line x1="110" y1="537" x2="113.53553390593" y2="533.46446609407" style="stroke:#c00;stroke-width:2;"/>
+   <line x1="278" y1="538" x2="268" y2="538" style="stroke:#cb0;stroke-width:1;"/>
+   <line x1="115" y1="537" x2="105" y2="537" style="stroke:#cb0;stroke-width:1;"/>
+   <line x1="268" y1="538" x2="115" y2="537" style="stroke:#cb0;stroke-width:1;"/>
+   <line x1="270.5" y1="538" x2="274.03553390593" y2="541.53553390593" style="stroke:#cb0;stroke-width:2;"/>
+   <line x1="270.5" y1="538" x2="274.03553390593" y2="534.46446609407" style="stroke:#cb0;stroke-width:2;"/>
+   <line x1="110" y1="537" x2="113.53553390593" y2="540.53553390593" style="stroke:#cb0;stroke-width:2;"/>
+   <line x1="110" y1="537" x2="113.53553390593" y2="533.46446609407" style="stroke:#cb0;stroke-width:2;"/>
+   <line x1="548" y1="558" x2="558" y2="558" style="stroke:#333;stroke-width:1;"/>
+   <line x1="648" y1="565" x2="658" y2="565" style="stroke:#333;stroke-width:1;"/>
+   <line x1="558" y1="558" x2="648" y2="565" style="stroke:#333;stroke-width:1;"/>
+   <line x1="555.5" y1="558" x2="551.96446609407" y2="561.53553390593" style="stroke:#333;stroke-width:2;"/>
+   <line x1="555.5" y1="558" x2="551.96446609407" y2="554.46446609407" style="stroke:#333;stroke-width:2;"/>
+   <line x1="653" y1="565" x2="649.46446609407" y2="568.53553390593" style="stroke:#333;stroke-width:2;"/>
+   <line x1="653" y1="565" x2="649.46446609407" y2="561.46446609407" style="stroke:#333;stroke-width:2;"/>
+   <line x1="548" y1="578" x2="558" y2="578" style="stroke:#b0b;stroke-width:1;"/>
+   <line x1="614" y1="767" x2="624" y2="767" style="stroke:#b0b;stroke-width:1;"/>
+   <line x1="558" y1="578" x2="614" y2="767" style="stroke:#b0b;stroke-width:1;"/>
+   <line x1="555.5" y1="578" x2="551.96446609407" y2="581.53553390593" style="stroke:#b0b;stroke-width:2;"/>
+   <line x1="555.5" y1="578" x2="551.96446609407" y2="574.46446609407" style="stroke:#b0b;stroke-width:2;"/>
+   <line x1="619" y1="767" x2="615.46446609407" y2="770.53553390593" style="stroke:#b0b;stroke-width:2;"/>
+   <line x1="619" y1="767" x2="615.46446609407" y2="763.46446609407" style="stroke:#b0b;stroke-width:2;"/>
+   <rect width="164" height="20" x="658" y="535" style="fill:#007;stroke:black;"/>
+   <text width="164" height="20" x="663" y="549" style="fill:#fff;" font-family="Arial" font-size="16px"> dim_cliente</text>
+   <rect width="164" height="20" x="658" y="555" style="fill:#aea;stroke:black;"/>
+   <text width="164" height="20" x="663" y="569" style="fill:black;" font-family="Arial" font-size="16px">id_cliente</text>
+   <rect width="164" height="20" x="658" y="575" style="fill:none;stroke:black;"/>
+   <text width="164" height="20" x="663" y="589" style="fill:black;" font-family="Arial" font-size="16px">nombre_empresa</text>
+   <rect width="164" height="20" x="658" y="595" style="fill:none;stroke:black;"/>
+   <text width="164" height="20" x="663" y="609" style="fill:black;" font-family="Arial" font-size="16px">sector</text>
+   <rect width="164" height="20" x="658" y="615" style="fill:none;stroke:black;"/>
+   <text width="164" height="20" x="663" y="629" style="fill:black;" font-family="Arial" font-size="16px">pais</text>
+   <rect width="164" height="20" x="658" y="635" style="fill:none;stroke:black;"/>
+   <text width="164" height="20" x="663" y="649" style="fill:black;" font-family="Arial" font-size="16px">importancia_en_sector</text>
+   <rect width="188" height="20" x="624" y="737" style="fill:#007;stroke:black;"/>
+   <text width="188" height="20" x="629" y="751" style="fill:#fff;" font-family="Arial" font-size="16px"> dim_detalles_proyecto</text>
+   <rect width="188" height="20" x="624" y="757" style="fill:#aea;stroke:black;"/>
+   <text width="188" height="20" x="629" y="771" style="fill:black;" font-family="Arial" font-size="16px">id_detalles</text>
+   <rect width="188" height="20" x="624" y="777" style="fill:none;stroke:black;"/>
+   <text width="188" height="20" x="629" y="791" style="fill:black;" font-family="Arial" font-size="16px">id_proyecto</text>
+   <rect width="188" height="20" x="624" y="797" style="fill:none;stroke:black;"/>
+   <text width="188" height="20" x="629" y="811" style="fill:black;" font-family="Arial" font-size="16px">nombre_proyecto</text>
+   <rect width="188" height="20" x="624" y="817" style="fill:none;stroke:black;"/>
+   <text width="188" height="20" x="629" y="831" style="fill:black;" font-family="Arial" font-size="16px">complejidad</text>
+   <rect width="188" height="20" x="624" y="837" style="fill:none;stroke:black;"/>
+   <text width="188" height="20" x="629" y="851" style="fill:black;" font-family="Arial" font-size="16px">tamano_equipo_categoria</text>
+   <rect width="86" height="20" x="19" y="507" style="fill:#007;stroke:black;"/>
+   <text width="86" height="20" x="24" y="521" style="fill:#fff;" font-family="Arial" font-size="16px"> dim_tiempo</text>
+   <rect width="86" height="20" x="19" y="527" style="fill:#aea;stroke:black;"/>
+   <text width="86" height="20" x="24" y="541" style="fill:black;" font-family="Arial" font-size="16px">id_fecha</text>
+   <rect width="86" height="20" x="19" y="547" style="fill:none;stroke:black;"/>
+   <text width="86" height="20" x="24" y="561" style="fill:black;" font-family="Arial" font-size="16px">fecha</text>
+   <rect width="86" height="20" x="19" y="567" style="fill:none;stroke:black;"/>
+   <text width="86" height="20" x="24" y="581" style="fill:black;" font-family="Arial" font-size="16px">anio</text>
+   <rect width="86" height="20" x="19" y="587" style="fill:none;stroke:black;"/>
+   <text width="86" height="20" x="24" y="601" style="fill:black;" font-family="Arial" font-size="16px">mes</text>
+   <rect width="86" height="20" x="19" y="607" style="fill:none;stroke:black;"/>
+   <text width="86" height="20" x="24" y="621" style="fill:black;" font-family="Arial" font-size="16px">trimestre</text>
+   <rect width="270" height="20" x="278" y="468" style="fill:#007;stroke:black;"/>
+   <text width="270" height="20" x="283" y="482" style="fill:#fff;" font-family="Arial" font-size="16px"> fact_proyectos</text>
+   <rect width="270" height="20" x="278" y="488" style="fill:#aea;stroke:black;"/>
+   <text width="270" height="20" x="283" y="502" style="fill:black;" font-family="Arial" font-size="16px">id_hecho</text>
+   <rect width="270" height="20" x="278" y="508" style="fill:none;stroke:black;"/>
+   <text width="270" height="20" x="283" y="522" style="fill:black;" font-family="Arial" font-size="16px">id_fecha_inicio</text>
+   <rect width="270" height="20" x="278" y="528" style="fill:none;stroke:black;"/>
+   <text width="270" height="20" x="283" y="542" style="fill:black;" font-family="Arial" font-size="16px">id_fecha_fin</text>
+   <rect width="270" height="20" x="278" y="548" style="fill:none;stroke:black;"/>
+   <text width="270" height="20" x="283" y="562" style="fill:black;" font-family="Arial" font-size="16px">id_cliente</text>
+   <rect width="270" height="20" x="278" y="568" style="fill:none;stroke:black;"/>
+   <text width="270" height="20" x="283" y="582" style="fill:black;" font-family="Arial" font-size="16px">id_detalles</text>
+   <rect width="270" height="20" x="278" y="588" style="fill:none;stroke:black;"/>
+   <text width="270" height="20" x="283" y="602" style="fill:black;" font-family="Arial" font-size="16px">presupuesto</text>
+   <rect width="270" height="20" x="278" y="608" style="fill:none;stroke:black;"/>
+   <text width="270" height="20" x="283" y="622" style="fill:black;" font-family="Arial" font-size="16px">costo_final</text>
+   <rect width="270" height="20" x="278" y="628" style="fill:none;stroke:black;"/>
+   <text width="270" height="20" x="283" y="642" style="fill:black;" font-family="Arial" font-size="16px">rentabilidad</text>
+   <rect width="270" height="20" x="278" y="648" style="fill:none;stroke:black;"/>
+   <text width="270" height="20" x="283" y="662" style="fill:black;" font-family="Arial" font-size="16px">dias_estimados</text>
+   <rect width="270" height="20" x="278" y="668" style="fill:none;stroke:black;"/>
+   <text width="270" height="20" x="283" y="682" style="fill:black;" font-family="Arial" font-size="16px">dias_reales</text>
+   <rect width="270" height="20" x="278" y="688" style="fill:none;stroke:black;"/>
+   <text width="270" height="20" x="283" y="702" style="fill:black;" font-family="Arial" font-size="16px">dias_retraso</text>
+   <rect width="270" height="20" x="278" y="708" style="fill:none;stroke:black;"/>
+   <text width="270" height="20" x="283" y="722" style="fill:black;" font-family="Arial" font-size="16px">lineas_codigo</text>
+   <rect width="270" height="20" x="278" y="728" style="fill:none;stroke:black;"/>
+   <text width="270" height="20" x="283" y="742" style="fill:black;" font-family="Arial" font-size="16px">tamano_equipo</text>
+   <rect width="270" height="20" x="278" y="748" style="fill:none;stroke:black;"/>
+   <text width="270" height="20" x="283" y="762" style="fill:black;" font-family="Arial" font-size="16px">porcentaje_modularizacion</text>
+   <rect width="270" height="20" x="278" y="768" style="fill:none;stroke:black;"/>
+   <text width="270" height="20" x="283" y="782" style="fill:black;" font-family="Arial" font-size="16px">total_bugs</text>
+   <rect width="270" height="20" x="278" y="788" style="fill:none;stroke:black;"/>
+   <text width="270" height="20" x="283" y="802" style="fill:black;" font-family="Arial" font-size="16px">total_bugs_criticos</text>
+   <rect width="270" height="20" x="278" y="808" style="fill:none;stroke:black;"/>
+   <text width="270" height="20" x="283" y="822" style="fill:black;" font-family="Arial" font-size="16px">tiempo_resolucion_bugs_promedio</text>
+   <rect width="270" height="20" x="278" y="828" style="fill:none;stroke:black;"/>
+   <text width="270" height="20" x="283" y="842" style="fill:black;" font-family="Arial" font-size="16px">total_requerimientos</text>
+   <rect width="270" height="20" x="278" y="848" style="fill:none;stroke:black;"/>
+   <text width="270" height="20" x="283" y="862" style="fill:black;" font-family="Arial" font-size="16px">porcentaje_cobertura_requerimientos</text>
+   <rect width="270" height="20" x="278" y="868" style="fill:none;stroke:black;"/>
+   <text width="270" height="20" x="283" y="882" style="fill:black;" font-family="Arial" font-size="16px">nivel_satisfaccion</text>
+</svg>
