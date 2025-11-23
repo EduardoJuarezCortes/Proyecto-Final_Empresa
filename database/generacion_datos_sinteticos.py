@@ -20,9 +20,11 @@ bugs y actividades debe estar dentro de fecha inicio y fecha final
 15% rentabilidad alta
 15% rentabilidad baja o sobrecoste 
 
-complejidad alta => 20-30 actividades / 8-15 bugs
-complejidad media => 10-20 actividades / 3-7 bugs
-complejidad baja => 5-10 actividades / 0-2 bugs
+complejidad alta => 20-30 actividades / 8-15 bugs / 10 - 15 requerimientos
+complejidad media => 10-20 actividades / 3-7 bugs / 6 - 10 requerimientos
+complejidad baja => 5-10 actividades / 0-2 bugs / 3 - 5 requerimientos
+
+80% de requerimientos con caso de prueba exitoso
 
 70% bugs solucionados
 20% bugs en revisión
@@ -110,7 +112,9 @@ ACTIVIDADES_EJEMPLO = [
     "Implementacion de logica de negocio"
     "Escritura de documentacion",
     "Actualizacion de documentacion",
-    "Revision de documentacion"
+    "Revision de documentacion",
+    "Pruebas de carga",
+    "Pruebas de seguridad"
 ]
 
 # de la misma manera para bugs, tenemos que agregar nuestro diccionario
@@ -131,6 +135,24 @@ BUGS_EJEMPLO = [
     'Problema de sincronización con la base de datos',
     'Error al cargar imágenes en la galería',
     'Fallo en la autenticación de dos factores'
+]
+
+REQUERIMIENTOS_EJEMPLO = [
+    'El sistema debe permitir la autenticación de usuarios mediante correo electrónico y contraseña.',
+    'La aplicación debe ser compatible con dispositivos móviles y tablets.',
+    'El sistema debe generar reportes mensuales de actividad de usuarios.',
+    'La plataforma debe integrarse con servicios de pago externos como PayPal y Stripe.',
+    'El sistema debe permitir la recuperación de contraseñas mediante correo electrónico.',
+    'La aplicación debe tener una interfaz intuitiva y fácil de usar.',
+    'El sistema debe soportar múltiples idiomas, incluyendo español e inglés.',
+    'La plataforma debe cumplir con las normativas de protección de datos vigentes.',
+    'El sistema debe permitir la exportación de datos en formatos CSV y PDF.',
+    'La aplicación debe tener un tiempo de respuesta inferior a 2 segundos para operaciones comunes.',
+    'El sistema debe permitir la gestión de roles y permisos para diferentes tipos de usuarios.',
+    'La plataforma debe contar con un sistema de notificaciones en tiempo real.',
+    'El sistema debe realizar copias de seguridad automáticas diarias de la base de datos.',
+    'La aplicación debe ser escalable para soportar un crecimiento en el número de usuarios.',
+    'El sistema debe permitir la integración con redes sociales para compartir contenido.'
 ]
 
 configuracion_db = {
@@ -195,6 +217,8 @@ time.sleep(1)
 id_proyecto_creados = []
 id_actividades_creadas = []
 id_bugs_creados = []
+id_requerimientos_creados = []
+id_casos_prueba_creados = []
 
 for i in range(1, NUM_PROYECTOS + 1):
     #seleccionamos un cliente aleatorio
@@ -247,9 +271,9 @@ for i in range(1, NUM_PROYECTOS + 1):
     nivel_satisfaccion = round(max(a, b), 1) # agarra el máximo de a o b para tendencia a más proyectos con alta satisfacción  
     
     args = (id_cliente, nombre_proyecto, fecha_inicio, fecha_estimada, fecha_real, presupuesto, costo_final, tamano_proyecto, complejidad, tamano_equipo, porcentaje_modularizacion, nivel_satisfaccion, 0) # 0 es para después obtener el id_Proyecto generado por el return del sp
-    resultado = cursor.callproc('insertar_proyecto', args)
+    resultado_proyectos = cursor.callproc('insertar_proyecto', args)
 
-    id_proyecto_creados.append(resultado[12])
+    id_proyecto_creados.append(resultado_proyectos[12])
 
     print(f"Proyecto {i}: Cliente ID:{id_cliente}, Nombre Proyecto: {nombre_proyecto}, Fecha Inicio: {fecha_inicio}, Fecha Estimada: {fecha_estimada}, Fecha Real: {fecha_real}, Presupuesto: {presupuesto}, Costo Final: {costo_final}, Tamaño Proyecto: {tamano_proyecto}, Complejidad: {complejidad}, Tamaño Equipo: {tamano_equipo}, % Modularización: {porcentaje_modularizacion}, Nivel Satisfacción: {nivel_satisfaccion}")
 
@@ -271,16 +295,16 @@ for i in range(1, NUM_PROYECTOS + 1):
         fecha_aprobacion = fake.date_between(start_date=fecha_inicio, end_date=fecha_limite)
         fecha_finalizacion = fake.date_between(start_date=fecha_aprobacion, end_date=fecha_limite)
         
-        resultado = cursor.callproc('insertar_actividad', (resultado[12], nombre, fecha_aprobacion, fecha_finalizacion, 0))
-        id_actividades_creadas.append(resultado[4])
-        print(f"    Actividad {j}: Nombre: {nombre}, Fecha Aprobación: {fecha_aprobacion}, Fecha Finalización: {fecha_finalizacion}")
+        resultado_actividades = cursor.callproc('insertar_actividad', (resultado_proyectos[12], nombre, fecha_aprobacion, fecha_finalizacion, 0))
+        id_actividades_creadas.append(resultado_actividades[4])
+        print(f"----Actividad {j}: Nombre: {nombre}, Fecha Aprobación: {fecha_aprobacion}, Fecha Finalización: {fecha_finalizacion}")
     
     # fin actividades ----------------------------------------------------------------------------------
 
     # bugs -----------------------------------------------------------------------------------
     # la probabilidad de bugs aumenta con la complejidad del proyecto
     if complejidad == 'Baja':
-        num_bugs = random.choices([0,1,2], weights=[0.5,0.25,0.25])[0]  # 60% sin bugs, 30% un bug, 10% dos bugs
+        num_bugs = random.choices([0,1,2], weights=[0.5,0.25,0.25])[0]  # 50% sin bugs, 25% un bug, 25% dos bugs
     elif complejidad == 'Media':
         num_bugs = random.randint(3, 7)
     else:  # Alta
@@ -311,15 +335,50 @@ for i in range(1, NUM_PROYECTOS + 1):
         
         severidad = random.choice(SEVERIDAD_BUG)
 
-        resultado = cursor.callproc('insertar_bug', (resultado[12], descripcion, fecha_deteccion, fecha_solucion, severidad, estado_bug, 0))
-        id_bugs_creados.append(resultado[6])
+        resultado_bugs = cursor.callproc('insertar_bug', (resultado_proyectos[12], descripcion, fecha_deteccion, fecha_solucion, severidad, estado_bug, 0))
+        id_bugs_creados.append(resultado_bugs[6])
 
-            
+        print(f"----Bug {k}: Descripción: {descripcion}, Fecha Detección: {fecha_deteccion}, Fecha Solución: {fecha_solucion}, Severidad: {severidad}, Estado: {estado_bug}")
     #fin bugs -----------------------------------------------------------------------------------
+
+    # requerimientos -----------------------------------------------------------------------------------
+    # número de requerimientos en función de la complejidad del proyecto
+    if complejidad == 'Baja':
+        num_requerimientos = random.randint(3, 5)
+    elif complejidad == 'Media':
+        num_requerimientos = random.randint(6, 10)
+    else:  # Alta
+        num_requerimientos = random.randint(10, 15)   
+
+    #EVITAR REPETIR REQUERIMIENTOS 
+    requerimientos_disponibles = REQUERIMIENTOS_EJEMPLO.copy()
+    random.shuffle(requerimientos_disponibles)
+
+    for l in range(1, num_requerimientos + 1):
+        descripcion = requerimientos_disponibles.pop()
+
+        resultado_requerimientos = cursor.callproc('insertar_requerimiento', (resultado_proyectos[12], descripcion, 0))
+        id_requerimientos_creados.append(resultado_requerimientos[2])
+        
+        print(f"----Requerimiento {l}: Descripción: {descripcion}")
+
+        #insert casos prueba ------------------------------------------------------------------------------
+        #insertamos un caso de prueba por requerimiento con probabilidad de éxito del 80%
+        exito = fake.boolean(chance_of_getting_true=80)
+        resultado_casos_prueba = cursor.callproc('insertar_caso_prueba', (resultado_requerimientos[2], exito, 0))
+        id_requerimientos_creados.append(resultado_casos_prueba[2])
+        print(f"--------Caso Prueba: Requerimiento ID: {resultado_requerimientos[2]}, Éxito: {exito}")
+        #fin casos prueba ---------------------------------------------------------------------------------
+    #fin requerimientos -----------------------------------------------------------------------------------
 
 #debug
 print("Datos sintéticos de Proyectos generados correctamente. (￣o￣) . z Z")
-print(id_proyecto_creados)
+print(f"ID's de proyectos: {id_proyecto_creados}")
+print(f"ID's de actividades: {id_actividades_creadas}")
+print(f"ID's de bugs: {id_bugs_creados}")
+print(f"ID's de requerimientos: {id_requerimientos_creados}")
+print(f"ID's de casos de prueba: {id_casos_prueba_creados}")
+
 time.sleep(1)
 
 

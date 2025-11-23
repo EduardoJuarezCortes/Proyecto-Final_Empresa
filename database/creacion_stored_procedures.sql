@@ -56,11 +56,13 @@ CREATE PROCEDURE insertar_actividad(
     IN arg_id_proyecto INT,
     IN arg_nombre VARCHAR(50),
     IN arg_aprobacion DATE,
-    IN arg_fin DATE
+    IN arg_fin DATE,
+    OUT arg_id_generado INT
 )
 BEGIN
     INSERT INTO Actividades (id_proyecto, nombre, fecha_aprobacion, fecha_finalizacion)
     VALUES (arg_id_proyecto, arg_nombre, arg_aprobacion, arg_fin);
+    SET arg_id_generado = LAST_INSERT_ID();
 END$$
 
 -- insert bug
@@ -70,11 +72,13 @@ CREATE PROCEDURE insertar_bug(
     IN arg_deteccion DATE,
     IN arg_solucion DATE,
     IN arg_severidad VARCHAR(20),
-    IN arg_estado VARCHAR(20)
+    IN arg_estado VARCHAR(20),
+    OUT arg_id_generado INT
 )
 BEGIN
     INSERT INTO Bugs (id_proyecto, descripcion, fecha_deteccion, fecha_solucion, severidad, estado)
     VALUES (arg_id_proyecto, arg_descripcion, arg_deteccion, arg_solucion, arg_severidad, arg_estado);
+    SET arg_id_generado = LAST_INSERT_ID();
 END$$
 
 -- insert Requerimiento
