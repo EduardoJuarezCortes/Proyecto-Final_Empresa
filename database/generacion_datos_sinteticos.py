@@ -244,9 +244,10 @@ for i in range(1, NUM_PROYECTOS + 1):
     presupuesto = round(random.uniform(5000, 50000), 2) # presupuesto entre 5,000 y 50,000
 
     # 70% rentabilidad media, 15% alta, 15% baja
-    if random.random() < 0.7:
+    r = random.random()
+    if r < 0.7:
         costo_final = round(presupuesto * random.uniform(0.8,0.9),2) # entre 10 y 20 de rentabilidad
-    elif random.random() < 0.85:
+    elif r < 0.85:
         costo_final = round(presupuesto * random.uniform(0.6,0.79),2) # más de 20 de rentabilidad con tope en 40%
     else:
         costo_final = round(presupuesto * random.uniform(0.91,1.2),2) # menos de 10 de rentabilidad con posibilidad de sobrecoste topando en 20
@@ -320,9 +321,10 @@ for i in range(1, NUM_PROYECTOS + 1):
         fecha_deteccion = fake.date_between(start_date=fecha_inicio, end_date=fecha_limite)
 
         # estado del bug
-        if random.random() < 0.7:
+        r = random.random()
+        if r < 0.7:
             estado_bug = 'Solucionado'
-        elif random.random() < 0.9:
+        elif r < 0.9:
             estado_bug = 'En revisión'
         else:
             estado_bug = 'Detectado'
