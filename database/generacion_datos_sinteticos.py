@@ -96,7 +96,7 @@ ACTIVIDADES_EJEMPLO = [
     'Análisis de requisitos con el cliente',
     'Configuración del entorno de desarrollo',
     'Automatización de pruebas',
-    'Capacitación para usuarios finales'
+    'Capacitación para usuarios finales',
     "Diseno de pantalla",
     "Diseno de API",
     "Diseno de flujo",
@@ -109,7 +109,7 @@ ACTIVIDADES_EJEMPLO = [
     "Refactorizacion de modulo",
     "Integracion de modulo",
     "Integracion con servicio externo",
-    "Implementacion de logica de negocio"
+    "Implementacion de logica de negocio",
     "Escritura de documentacion",
     "Actualizacion de documentacion",
     "Revision de documentacion",
@@ -185,7 +185,7 @@ elif borrar_todo != 's' and borrar_todo != 'n':
 time.sleep(1)
 
 # generamos clientes ---------------------------------------------------------------------------------
-print("Generando datos sintéticos de Clientes (～﹃～)~zZ")
+print("\n\nGenerando datos sintéticos de Clientes (～﹃～)~zZ")
 time.sleep(1)
 
 id_cliente_creados = []
@@ -206,12 +206,11 @@ for i in range(1, NUM_CLIENTES + 1):
 
     id_cliente_creados.append(returned_id)
 
-print("Datos sintéticos de Clientes generados correctamente. (￣o￣) . z Z")
-print(id_cliente_creados)
+print("\n\nDatos sintéticos de Clientes generados correctamente. (￣o￣) . z Z")
 time.sleep(1)
 
 # generamos  proytectos ---------------------------------------------------------------------------------
-print("Generando datos sintéticos de Proyectos (～﹃～)~zZ")
+print("\n\nGenerando datos sintéticos de Proyectos (～﹃～)~zZ")
 time.sleep(1)
 
 id_proyecto_creados = []
@@ -275,7 +274,7 @@ for i in range(1, NUM_PROYECTOS + 1):
 
     id_proyecto_creados.append(resultado_proyectos[12])
 
-    print(f"Proyecto {i}: Cliente ID:{id_cliente}, Nombre Proyecto: {nombre_proyecto}, Fecha Inicio: {fecha_inicio}, Fecha Estimada: {fecha_estimada}, Fecha Real: {fecha_real}, Presupuesto: {presupuesto}, Costo Final: {costo_final}, Tamaño Proyecto: {tamano_proyecto}, Complejidad: {complejidad}, Tamaño Equipo: {tamano_equipo}, % Modularización: {porcentaje_modularizacion}, Nivel Satisfacción: {nivel_satisfaccion}")
+    print(f"\nProyecto {i}: Cliente ID:{id_cliente}, Nombre Proyecto: {nombre_proyecto}, Fecha Inicio: {fecha_inicio}, Fecha Estimada: {fecha_estimada}, Fecha Real: {fecha_real}, Presupuesto: {presupuesto}, Costo Final: {costo_final}, Tamaño Proyecto: {tamano_proyecto}, Complejidad: {complejidad}, Tamaño Equipo: {tamano_equipo}, % Modularización: {porcentaje_modularizacion}, Nivel Satisfacción: {nivel_satisfaccion}")
 
     # actividades ----------------------------------------------------------------------------------
     # Para que sea más preciso, generaremos más o menos actividades en función de la complejidad del proyecto, por lo tanto, se realiza en este loop
@@ -329,7 +328,7 @@ for i in range(1, NUM_PROYECTOS + 1):
             estado_bug = 'Detectado'
         
         if estado_bug == 'Solucionado':
-            fecha_solucion = fake.date_between(start_date=fecha_aprobacion, end_date=fecha_limite)
+            fecha_solucion = fake.date_between(start_date=fecha_deteccion, end_date=fecha_limite)
         else:
             fecha_solucion = None
         
@@ -366,25 +365,26 @@ for i in range(1, NUM_PROYECTOS + 1):
         #insertamos un caso de prueba por requerimiento con probabilidad de éxito del 80%
         exito = fake.boolean(chance_of_getting_true=80)
         resultado_casos_prueba = cursor.callproc('insertar_caso_prueba', (resultado_requerimientos[2], exito, 0))
-        id_requerimientos_creados.append(resultado_casos_prueba[2])
+        id_casos_prueba_creados.append(resultado_casos_prueba[2])
         print(f"--------Caso Prueba: Requerimiento ID: {resultado_requerimientos[2]}, Éxito: {exito}")
         #fin casos prueba ---------------------------------------------------------------------------------
     #fin requerimientos -----------------------------------------------------------------------------------
 
 #debug
-print("Datos sintéticos de Proyectos generados correctamente. (￣o￣) . z Z")
-print(f"ID's de proyectos: {id_proyecto_creados}")
-print(f"ID's de actividades: {id_actividades_creadas}")
-print(f"ID's de bugs: {id_bugs_creados}")
-print(f"ID's de requerimientos: {id_requerimientos_creados}")
-print(f"ID's de casos de prueba: {id_casos_prueba_creados}")
+print("\n\nDatos sintéticos de Proyectos generados correctamente. (￣o￣) . z Z")
+# print(f"\nID's de clientes: {id_cliente_creados}")
+# print(f"\nID's de proyectos: {id_proyecto_creados}")
+# print(f"\nID's de actividades: {id_actividades_creadas}")
+# print(f"\nID's de bugs: {id_bugs_creados}")
+# print(f"\nID's de requerimientos: {id_requerimientos_creados}")
+# print(f"\nID's de casos de prueba: {id_casos_prueba_creados}")
 
 time.sleep(1)
 
 
 
 # confirmación de commit o rollback ----------------------------------------------------------------
-confirmar = input("¿Deseas hacer commit de inserción o rollback? (s/n): ").strip().lower()
+confirmar = input("\n\n¿Deseas hacer commit de inserción o rollback? (s/n): ").strip().lower()
 if confirmar == 's':
     conexion.commit()
     print("Cambios confirmados en la base de datos.")
@@ -397,6 +397,6 @@ else:
 cursor.close()
 conexion.close()
 
-print("BYE!")
+print("\n\nBYE!")
 
 # ---------------------------------------------------------------------------------------------------------
