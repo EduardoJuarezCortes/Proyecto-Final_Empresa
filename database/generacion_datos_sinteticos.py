@@ -11,17 +11,24 @@ Clientes
 
 Fecha inicio < fecha estimada
 fecha final puede ser mayuor a la estimada para simular retrasos
-bugs y actividades debe estar dentro de fecha inicio yu fecha final
+    50% proyectos terminan justo en fecha estimada
+    25% antes de la fecha estimada
+    25% después de la fecha estimada
+bugs y actividades debe estar dentro de fecha inicio y fecha final
 
-70% proyectos normales con rentabilidad media, y algunos bugs
-15% de proyectos excelentes con finalización antes de fecha estimada, alta satisfacción y 0 bugs criticos
-15% deproyectos malos con >20 días de retraso, presupuesto excedido, muchos bugs y baja satisfacción+
+70% rentabilidad media
+15% rentabilidad alta
+15% rentabilidad baja o sobrecoste 
 
-si la complejidad es alta, más probabilidad de bugs 
-si complejidad es baja,  menos probabilidad de bugs
+complejidad alta => 20-30 actividades / 8-15 bugs
+complejidad media => 10-20 actividades / 3-7 bugs
+complejidad baja => 5-10 actividades / 0-2 bugs
+
+70% bugs solucionados
+20% bugs en revisión
+10% bugs detectados
 
 10% de proyectos no estan terminados
-de los proyectos terminados, 50% justo en la fecha estimada, 25% antes y 25% después
 """
 
 
@@ -55,6 +62,7 @@ IMPORTANCIA_EN_SECTOR = ['Baja', 'Media', 'Alta']
 
 COMPLEJIDAD_PROYECTO = ['Baja', 'Media', 'Alta']
 SEVERIDAD_BUG = ['Baja', 'Media', 'Alta', 'Crítica']
+ESTADO_BUGS = ['Detectado', 'En revisión', 'Solucionado']
 
 #como los nombres de la empresa son en español, no tiene sentido que una empresa con nombre en español sea de un país que no sea hispanoablante
 # la manera de hacerlo internacional sería hacer una función que genere nombres de empresas (en inglés) y en función de el sector aleatorio pasado como parámetro
@@ -69,6 +77,61 @@ PAISES_HISPANOS = [
 
 ### para generar nombres de proyecto viables agregamos palabras asociadas a proyectos de software para poder generar nombres más realistas
 PALABRAS_PROYECTOS = [ 'Sistema', 'Aplicación', 'Plataforma', 'Red', 'Portal', 'Gestor', 'Administrador', 'Controlador', 'Monitor', 'Analizador', 'API', 'Web']
+
+# para generar actividades viables agregamos nuestro diccionario con actividades comunes en desarrollo de software, ya que faker no nos puede proveer de buenos ejemplos
+ACTIVIDADES_EJEMPLO = [
+    'Diseño de la arquitectura del sistema',
+    'Desarrollo del módulo de autenticación',
+    'Implementación de la base de datos',
+    'Creación de la interfaz de usuario',
+    'Pruebas unitarias del componente X',
+    'Integración con servicios externos',
+    'Optimización del rendimiento',
+    'Documentación del código',
+    'Revisión de seguridad',
+    'Despliegue en el entorno de producción',
+    'Mantenimiento y actualizaciones',
+    'Análisis de requisitos con el cliente',
+    'Configuración del entorno de desarrollo',
+    'Automatización de pruebas',
+    'Capacitación para usuarios finales'
+    "Diseno de pantalla",
+    "Diseno de API",
+    "Diseno de flujo",
+    "Diseno de arquitectura",
+    "Creacion de prototipo",
+    "Implementacion de endpoint",
+    "Implementacion de servicio",
+    "Implementacion de componente frontend",
+    "Refactorizacion de funcion",
+    "Refactorizacion de modulo",
+    "Integracion de modulo",
+    "Integracion con servicio externo",
+    "Implementacion de logica de negocio"
+    "Escritura de documentacion",
+    "Actualizacion de documentacion",
+    "Revision de documentacion"
+]
+
+# de la misma manera para bugs, tenemos que agregar nuestro diccionario
+BUGS_EJEMPLO = [
+    'Error al iniciar sesión con credenciales válidas',
+    'Fallo en la carga de la página principal',
+    'Problema de visualización en dispositivos móviles',
+    'Error al guardar cambios en el perfil de usuario',
+    'Fallo en la integración con el servicio de pago',
+    'Problema de rendimiento al cargar grandes volúmenes de datos',
+    'Error de validación en el formulario de registro',
+    'Fallo en la generación de reportes',
+    'Problema de compatibilidad con navegadores antiguos',
+    'Error al enviar notificaciones por correo electrónico',
+    'Bloqueo de la aplicación al realizar una búsqueda avanzada',
+    'Fallo en la actualización automática de la aplicación',
+    'Error al exportar datos en formato CSV',
+    'Problema de sincronización con la base de datos',
+    'Error al cargar imágenes en la galería',
+    'Fallo en la autenticación de dos factores'
+]
 
 configuracion_db = {
     'user': 'root',
@@ -128,14 +191,20 @@ time.sleep(1)
 # generamos  proytectos ---------------------------------------------------------------------------------
 print("Generando datos sintéticos de Proyectos (～﹃～)~zZ")
 time.sleep(1)
+
 id_proyecto_creados = []
+id_actividades_creadas = []
+id_bugs_creados = []
 
 for i in range(1, NUM_PROYECTOS + 1):
     #seleccionamos un cliente aleatorio
     id_cliente = random.choice(id_cliente_creados)
+
     nombre_proyecto = random.choice(PALABRAS_PROYECTOS) + ' "' + fake_eng.domain_word().title() + '"'
+
     fecha_inicio = fake.date_between(start_date='-2y', end_date='today')
     fecha_estimada = fecha_inicio + timedelta(days=random.randint(30, 180)) # todo proyecto será de uno a seis meses
+    
     # esta terminado?
     if random.random() < 0.9:  # 90% de probabilidad de que el proyecto esté terminado
         r = random.random()
@@ -148,7 +217,9 @@ for i in range(1, NUM_PROYECTOS + 1):
             fecha_real = fecha_estimada + timedelta(days=random.randint(1, 20))  # puede terminar  10 antes o 20 después
     else:
         fecha_real = None  # proyecto no terminado
+
     presupuesto = round(random.uniform(5000, 50000), 2) # presupuesto entre 5,000 y 50,000
+
     # 70% rentabilidad media, 15% alta, 15% baja
     if random.random() < 0.7:
         costo_final = round(presupuesto * random.uniform(0.8,0.9),2) # entre 10 y 20 de rentabilidad
@@ -156,7 +227,9 @@ for i in range(1, NUM_PROYECTOS + 1):
         costo_final = round(presupuesto * random.uniform(0.6,0.79),2) # más de 20 de rentabilidad con tope en 40%
     else:
         costo_final = round(presupuesto * random.uniform(0.91,1.2),2) # menos de 10 de rentabilidad con posibilidad de sobrecoste topando en 20
+
     tamano_proyecto = random.randint(1000,150000) # en líneas de código 1000 a 10000 pequeño 10000 a 100000 mediano 100000 a 150000 grande
+
     if tamano_proyecto < 10000:
         complejidad = 'Baja'
         tamano_equipo = random.randint(3,7)
@@ -166,7 +239,9 @@ for i in range(1, NUM_PROYECTOS + 1):
     elif tamano_proyecto >= 100000:
         complejidad = 'Alta'
         tamano_equipo = random.randint(15,30)
+
     porcentaje_modularizacion = round(random.uniform(25, 100), 1)  # entre 25% y 100%
+
     a = random.uniform(1, 100)
     b = random.uniform(1, 100)
     nivel_satisfaccion = round(max(a, b), 1) # agarra el máximo de a o b para tendencia a más proyectos con alta satisfacción  
@@ -178,11 +253,91 @@ for i in range(1, NUM_PROYECTOS + 1):
 
     print(f"Proyecto {i}: Cliente ID:{id_cliente}, Nombre Proyecto: {nombre_proyecto}, Fecha Inicio: {fecha_inicio}, Fecha Estimada: {fecha_estimada}, Fecha Real: {fecha_real}, Presupuesto: {presupuesto}, Costo Final: {costo_final}, Tamaño Proyecto: {tamano_proyecto}, Complejidad: {complejidad}, Tamaño Equipo: {tamano_equipo}, % Modularización: {porcentaje_modularizacion}, Nivel Satisfacción: {nivel_satisfaccion}")
 
+    # actividades ----------------------------------------------------------------------------------
+    # Para que sea más preciso, generaremos más o menos actividades en función de la complejidad del proyecto, por lo tanto, se realiza en este loop
+    if complejidad == 'Baja':
+        num_actividades = random.randint(5, 10)
+    elif complejidad == 'Media':
+        num_actividades = random.randint(10, 20)
+    else:  # Alta
+        num_actividades = random.randint(20, 30)
+    
+    actividades_disponibles = ACTIVIDADES_EJEMPLO.copy() # PARA NO REPETIR ACTIVIDADES
+    random.shuffle(actividades_disponibles)
+
+    for j in range(1, num_actividades + 1):
+        nombre = actividades_disponibles.pop() 
+        fecha_limite = fecha_estimada - timedelta(days= random.randint(0, 15))  # fecha límite antes de la fecha estimada para que no haya actividades que duren un día o menos
+        fecha_aprobacion = fake.date_between(start_date=fecha_inicio, end_date=fecha_limite)
+        fecha_finalizacion = fake.date_between(start_date=fecha_aprobacion, end_date=fecha_limite)
+        
+        resultado = cursor.callproc('insertar_actividad', (resultado[12], nombre, fecha_aprobacion, fecha_finalizacion, 0))
+        id_actividades_creadas.append(resultado[4])
+        print(f"    Actividad {j}: Nombre: {nombre}, Fecha Aprobación: {fecha_aprobacion}, Fecha Finalización: {fecha_finalizacion}")
+    
+    # fin actividades ----------------------------------------------------------------------------------
+
+    # bugs -----------------------------------------------------------------------------------
+    # la probabilidad de bugs aumenta con la complejidad del proyecto
+    if complejidad == 'Baja':
+        num_bugs = random.choices([0,1,2], weights=[0.5,0.25,0.25])[0]  # 60% sin bugs, 30% un bug, 10% dos bugs
+    elif complejidad == 'Media':
+        num_bugs = random.randint(3, 7)
+    else:  # Alta
+        num_bugs = random.randint(8, 15)
+    
+    #DE LA MISMA MANERA TENEMOS QUE EVITAR REPETIR BUGS
+    bugs_disponibles = BUGS_EJEMPLO.copy()
+    random.shuffle(bugs_disponibles)
+
+    for k in range(1, num_bugs + 1):
+        descripcion = bugs_disponibles.pop()
+
+        fecha_limite = fecha_estimada - timedelta(days= random.randint(0, 5))  # bugs no pueden detectarse en los últimos 5 días antes de la fecha estimada
+        fecha_deteccion = fake.date_between(start_date=fecha_inicio, end_date=fecha_limite)
+
+        # estado del bug
+        if random.random() < 0.7:
+            estado_bug = 'Solucionado'
+        elif random.random() < 0.9:
+            estado_bug = 'En revisión'
+        else:
+            estado_bug = 'Detectado'
+        
+        if estado_bug == 'Solucionado':
+            fecha_solucion = fake.date_between(start_date=fecha_aprobacion, end_date=fecha_limite)
+        else:
+            fecha_solucion = None
+        
+        severidad = random.choice(SEVERIDAD_BUG)
+
+        resultado = cursor.callproc('insertar_bug', (resultado[12], descripcion, fecha_deteccion, fecha_solucion, severidad, estado_bug, 0))
+        id_bugs_creados.append(resultado[6])
+
+            
+    #fin bugs -----------------------------------------------------------------------------------
+
 #debug
 print("Datos sintéticos de Proyectos generados correctamente. (￣o￣) . z Z")
 print(id_proyecto_creados)
 time.sleep(1)
 
-# generamos  acctividades -------------------------------------------------------------------------------
 
 
+# confirmación de commit o rollback ----------------------------------------------------------------
+confirmar = input("¿Deseas hacer commit de inserción o rollback? (s/n): ").strip().lower()
+if confirmar == 's':
+    conexion.commit()
+    print("Cambios confirmados en la base de datos.")
+elif confirmar == 'n':
+    conexion.rollback()
+    print("Cambios revertidos, no se han guardado en la base de datos.")
+else:
+    print("Entrada no válida, no se han realizado cambios en la base de datos.")
+
+cursor.close()
+conexion.close()
+
+print("BYE!")
+
+# ---------------------------------------------------------------------------------------------------------
