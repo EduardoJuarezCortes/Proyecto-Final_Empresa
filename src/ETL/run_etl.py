@@ -1,61 +1,59 @@
 import mysql.connector
 import time
 
-# Datos de conexion a tu base de datos local
+# Configuracion para conectarse al Data Warehouse (Maquina 3)
 config = {
-    'user': 'root',
-    'password': '',       # Si tienes pass, ponla aqui
-    'host': 'localhost',
+    'user': 'yuri',
+    'password': '1234',      
+    'host': '192.168.1.27',  # Revisar si esta IP es la correcta
     'database': 'soporte_decision'
 }
 
 def correr_etl():
-    print("\n--- Iniciando proceso ETL ---")
+    print("\n--- Iniciando el ETL Remoto ---")
     
-    start_time = time.time()
+    inicio = time.time()
     conn = None
     
     try:
-        # Nos conectamos a MySQL
+        # 1. Nos conectamos a la base de datos destino
+        print("Conectando al servidor...")
         conn = mysql.connector.connect(**config)
         cursor = conn.cursor()
-        print("Conexion exitosa.")
+        print("Conexion lista.")
 
-        # Ejecutamos los procedimientos en orden
+        # 2. Ejecutamos los procedimientos almacenados
+        # Estos SPs son los que jalan la info de la otra maquina
+        print("Ejecutando carga de datos...")
         
-        # 1. Dimensiones basicas
-        print("Cargando tiempos y clientes...")
+        # Primero las dimensiones
+        print("- Cargando Tiempos y Clientes")
         cursor.callproc('etl_carga_tiempo')
         cursor.callproc('etl_carga_clientes')
         
-        # 2. Tabla de hechos (la pesada)
-        print("Calculando KPIs y llenando hechos...")
+        # Luego la tabla de hechos (aqui tarda un poco mas)
+        print("- Procesando Hechos y calculando KPIs")
         cursor.callproc('etl_carga_hechos')
         
         # Guardamos los cambios
         conn.commit()
         
-        # Vemos cuantas filas quedaron para confirmar
+        # Vemos cuantos registros quedaron para confirmar
         cursor.execute("SELECT COUNT(*) FROM Fact_Proyectos")
         total = cursor.fetchone()[0]
         
-        # Calculamos cuanto tardo
-        duracion = round(time.time() - start_time, 2)
+        tiempo_total = round(time.time() - inicio, 2)
         
         print(f"\nProceso terminado correctamente.")
-        print(f"Tiempo: {duracion} segundos")
-        print(f"Total de proyectos procesados: {total}")
+        print(f"Tiempo: {tiempo_total} seg")
+        print(f"Proyectos procesados: {total}")
 
-    except mysql.connector.Error as err:
-        print(f"Error de base de datos: {err}")
     except Exception as e:
-        print(f"Error general: {e}")
+        print(f"\nHubo un error: {e}")
     finally:
-        # Cerramos la conexion si esta abierta
+        # Cerramos todo al terminar
         if conn and conn.is_connected():
-            cursor.close()
             conn.close()
-            print("Conexion cerrada.")
 
 if __name__ == "__main__":
     correr_etl()
