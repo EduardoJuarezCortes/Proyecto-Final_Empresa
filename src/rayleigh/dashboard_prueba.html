@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Prueba de Rayleigh</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        body { font-family: sans-serif; padding: 20px; background-color: #f4f4f9; }
+        .container { max-width: 800px; margin: 0 auto; background: white; padding: 20px; border-radius: 10px; box-shadow: 0 4px 6px rgba(0,0,0,0.1); }
+        h1 { color: #2c3e50; text-align: center; }
+        .controls { display: flex; gap: 10px; justify-content: center; margin-bottom: 20px; }
+        input { padding: 10px; border: 1px solid #ddd; border-radius: 5px; width: 150px; }
+        button { padding: 10px 20px; background-color: #3498db; color: white; border: none; border-radius: 5px; cursor: pointer; font-weight: bold; }
+        button:hover { background-color: #2980b9; }
+        #resultadoTexto { text-align: center; font-size: 1.2em; margin-bottom: 10px; color: #27ae60; font-weight: bold; }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h1>Predicción de Defectos (Rayleigh)</h1>
+    <p style="text-align: center; color: #7f8c8d;">Ingresa los datos del nuevo proyecto para ver la curva.</p>
+
+    <div class="controls">
+        <input type="number" id="tamano" placeholder="Tamaño (KLOC)" value="80000">
+        <input type="number" id="duracion" placeholder="Duración (Meses)" value="12">
+        <button onclick="generarGrafica()">Ver Gráfica</button>
+    </div>
+
+    <div id="resultadoTexto"></div>
+    
+    <canvas id="miGrafico"></canvas>
+</div>
+
+<script>
+    let myChart = null;
+
+    async function generarGrafica() {
+        const tamano = document.getElementById('tamano').value;
+        const duracion = document.getElementById('duracion').value;
+
+        // Llama a la API 
+        try {
+            const respuesta = await fetch('http://127.0.0.1:5000/predict', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ tamano: tamano, duracion: duracion })
+            });
+
+            const json = await respuesta.json();
+            
+            if (json.error) {
+                alert("Error: " + json.error);
+                return;
+            }
+
+            const datos = json.data;
+            document.getElementById('resultadoTexto').innerText = 
+                `Total estimado de Defectos: ${datos.total_defectos_estimados}`;
+
+            // 2. Dibujar la Gráfica con los datos que recibimos
+            actualizarChart(datos.meses_proyectados, datos.distribucion_tiempo, duracion);
+
+        } catch (error) {
+            console.error(error);
+            alert("Error: Asegúrate de que tu archivo api.py esté corriendo en la terminal.");
+        }
+    }
+
+    function actualizarChart(etiquetas, datos, limite) {
+        const ctx = document.getElementById('miGrafico').getContext('2d');
+        
+        if (myChart) { myChart.destroy(); } // Borrar gráfica anterior si existe
+
+        myChart = new Chart(ctx, {
+            type: 'line',
+            data: {
+                labels: etiquetas, // Mes 1, Mes 2, etc.
+                datasets: [{
+                    label: 'Defectos Esperados por Mes',
+                    data: datos, // Los números que calculó tu Python
+                    borderColor: '#3498db',
+                    backgroundColor: 'rgba(52, 152, 219, 0.2)',
+                    borderWidth: 3,
+                    fill: true,
+                    tension: 0.4 // Hace la curva suave
+                }]
+            },
+            options: {
+                responsive: true,
+                plugins: {
+                    annotation: {
+                        annotations: {
+                            line1: {
+                                type: 'line',
+                                xMin: limite - 1, xMax: limite - 1,
+                                borderColor: 'red', borderWidth: 2,
+                            }
+                        }
+                    }
+                },
+                scales: {
+                    x: { title: { display: true, text: 'Meses del Proyecto' } },
+                    y: { title: { display: true, text: 'Cantidad de Bugs' }, beginAtZero: true }
+                }
+            }
+        });
+    }
+</script>
+
+</body>
+</html>
