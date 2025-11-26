@@ -1,6 +1,3 @@
-/// Es necesario instalar las siguentes librerías para que el proyecto funcione correctamente
-/// Puedes instalarlas usando el siguiente comando:
-/// pip install -r requirements.txt o pip install + nombre_librería
 flask
 pandas
 numpy
