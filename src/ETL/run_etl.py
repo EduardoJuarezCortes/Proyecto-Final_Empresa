@@ -4,18 +4,18 @@ import time
 
 # Datos de la maquina de gestion (la que tiene los datos)
 config_origen = {
-    'user': 'yuri',
-    'password': '1234',
-    'host': '192.168.1.50',  # Cambiar por la IP de gestion
-    'database': 'Gestion_Proyectos'
+    'user': 'u1uyotv0qcdgpm9d',
+    'password': 'OTwjsKDFVjFFnNK1fkJQ',
+    'host': 'bqzjlogcacqdk2zh8wul-mysql.services.clever-cloud.com',  # Cambiar por la IP de gestion
+    'database': 'bqzjlogcacqdk2zh8wul'
 }
 
 # Datos de la maquina de soporte (donde guardamos todo)
 config_destino = {
-    'user': 'yuri',
-    'password': '1234',
-    'host': '192.168.1.27',  # Cambiar por la IP de soporte
-    'database': 'soporte_decision'
+    'user': 'u5l8bpppddieh0vh',
+    'password': 'OUo9CrAV72h5iiIqwiyq',
+    'host': 'bxerwsfyhybactzvtifg-mysql.services.clever-cloud.com',  # Cambiar por la IP de soporte
+    'database': 'bxerwsfyhybactzvtifg'
 }
 
 # --- Funciones utiles ---
