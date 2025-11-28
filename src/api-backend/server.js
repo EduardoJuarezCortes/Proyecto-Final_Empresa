@@ -15,7 +15,13 @@ const dbConfig = {
   host: process.env.DB_HOST || 'localhost',
   user: process.env.DB_USER || 'root',
   password: process.env.DB_PASSWORD || '',
-  database: process.env.DB_NAME || 'soporte_decision'
+  database: process.env.DB_NAME || 'soporte_decision',
+  port: 3306, // Asegúrate de que el puerto sea el correcto (Clever Cloud suele usar 3306)
+  
+  // --- AQUÍ ESTÁ LA MAGIA ---
+  connectionLimit: 3,      // Límite estricto: Solo usará 3 conexiones simultáneas
+  waitForConnections: true, // Si las 3 están ocupadas, la 4ta espera (hace fila) en vez de dar error
+  queueLimit: 0             // La fila de espera puede ser infinita
 };
 
 // Pool de conexiones
