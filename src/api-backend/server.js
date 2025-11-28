@@ -111,43 +111,59 @@ app.get('/api/okrs', async (req, res) => {
       // Perspectiva Financiera
       rentabilidad: `
         SELECT 
-          Año,
+          Año, 
           AVG(Rentabilidad) as rentabilidad_promedio,
           COUNT(*) as num_proyectos
-        FROM Cubo_Proyectos_OLAP
-        GROUP BY Año
+        FROM Cubo_Proyectos_OLAP 
+        GROUP BY Año 
         ORDER BY Año
       `,
       // Perspectiva del Cliente
       satisfaccion: `
         SELECT 
-          Sector_Industrial,
-          AVG(Satisfaccion_Cliente) as satisfaccion_promedio,
+          Sector_Industrial, 
+          AVG(Satisfaccion_Cliente) as satisfaccion_promedio, 
           COUNT(DISTINCT Cliente) as clientes_unicos
-        FROM Cubo_Proyectos_OLAP
+        FROM Cubo_Proyectos_OLAP 
         GROUP BY Sector_Industrial
       `,
       // Perspectiva Interna
       calidad: `
         SELECT 
-          Complejidad,
-          AVG(Total_Defectos) as defectos_promedio,
+          Complejidad, 
+          AVG(Total_Defectos) as defectos_promedio, 
           AVG(Tiempo_Resolucion_Promedio) as tiempo_resolucion_avg
-        FROM Cubo_Proyectos_OLAP
+        FROM Cubo_Proyectos_OLAP 
         GROUP BY Complejidad
+      `,
+      
+      // KPIs Globales para las tarjetas (KPIs sueltos)
+      resumen: `
+        SELECT 
+          AVG(Satisfaccion_Cliente) as satisfaccion_global,
+          COUNT(DISTINCT Cliente) as total_clientes_unicos,
+          
+          -- Calcula % de proyectos que generaron ganancia (Rentabilidad > 0)
+          (SUM(CASE WHEN Rentabilidad > 0 THEN 1 ELSE 0 END) / COUNT(*)) * 100 as pct_proyectos_rentables,
+          
+          -- Usamos la cobertura de pruebas como métrica de innovación/calidad
+          AVG(Cobertura_Pruebas_Pct) as innovacion_metric
+        FROM Cubo_Proyectos_OLAP
       `
     };
 
     const [rentabilidad] = await pool.execute(queries.rentabilidad);
     const [satisfaccion] = await pool.execute(queries.satisfaccion);
     const [calidad] = await pool.execute(queries.calidad);
+    const [resumen] = await pool.execute(queries.resumen);
 
     res.json({
       success: true,
       data: {
         rentabilidad,
         satisfaccion,
-        calidad
+        calidad,
+        resumen: resumen[0]
       }
     });
   } catch (error) {

@@ -108,8 +108,8 @@ const BalancedScorecard = () => {
             />
             <MetricaOKR
               label="Proyectos Rentables"
-              value="85%"
-              progress={85}
+              value={`${Number(okrsData?.resumen?.pct_proyectos_rentables || 0).toFixed(1)}%`}
+              progress={okrsData?.resumen?.pct_proyectos_rentables || 0}
             />
           </div>
         </PerspectivaCard>
@@ -122,10 +122,13 @@ const BalancedScorecard = () => {
           color="bg-blue-500"
         >
           <ResponsiveContainer width="100%" height={250}>
-            <BarChart data={okrsData?.satisfaccion || []}>
+            <BarChart 
+              data={okrsData?.satisfaccion || []}
+              margin={{ top: 10, right: 30, left: 15, bottom: 0 }}
+            >
               <CartesianGrid strokeDasharray="3 3" />
               <XAxis dataKey="Sector_Industrial" angle={-45} textAnchor="end" height={80} />
-              <YAxis domain={[0, 10]} />
+              <YAxis tickFormatter={(value) => value.toFixed(1)} />
               <Tooltip />
               <Legend />
               <Bar dataKey="satisfaccion_promedio" fill="#3b82f6" name="Satisfacción Promedio" />
@@ -134,13 +137,13 @@ const BalancedScorecard = () => {
           <div className="mt-4 grid grid-cols-2 gap-4">
             <MetricaOKR
               label="Satisfacción Global"
-              value="8.5/10"
-              progress={85}
+              value={`${Number(okrsData?.resumen?.satisfaccion_global || 0).toFixed(1)}/100`}
+              progress={(okrsData?.resumen?.satisfaccion_global || 0)} 
             />
             <MetricaOKR
               label="Clientes Únicos"
-              value={okrsData?.satisfaccion[0]?.clientes_unicos || 0}
-              progress={70}
+              value={okrsData?.resumen?.total_clientes_unicos || 0}
+              progress={100} 
             />
           </div>
         </PerspectivaCard>
@@ -203,9 +206,9 @@ const BalancedScorecard = () => {
             </div>
             <div className="mt-4 grid grid-cols-2 gap-4">
               <MetricaOKR
-                label="Innovación"
-                value="75%"
-                progress={75}
+                label="Innovación (Cobertura)"
+                value={`${Number(okrsData?.resumen?.innovacion_metric || 0).toFixed(1)}%`}
+                progress={okrsData?.resumen?.innovacion_metric || 0}
               />
               <MetricaOKR
                 label="Retención Talento"

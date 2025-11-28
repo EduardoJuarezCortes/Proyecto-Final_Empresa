@@ -195,7 +195,7 @@ const KPIDashboard = () => {
         />
         <KPICard
           title="Satisfacción Cliente"
-          value={`${formatNumber(kpis?.satisfaccion_promedio, 1)}/10`}
+          value={`${formatNumber(kpis?.satisfaccion_promedio, 1)}/100`}
           icon={<TrendingUp className="w-6 h-6" />}
           color="bg-purple-500"
         />
@@ -220,25 +220,24 @@ const KPIDashboard = () => {
       </div>
 
       {/* Gráficas */}
-{/* Gráficas */}
       {!noData && proyectosData.length > 0 && (
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
           {/* Rentabilidad por Proyecto */}
           <div className="bg-white p-6 rounded-lg shadow">
             <h3 className="text-lg font-semibold mb-4">Rentabilidad por Proyecto</h3>
-            <ResponsiveContainer width="100%" height={400}> {/* Aumenté un poco la altura total aquí también */}
+            <ResponsiveContainer width="100%" height={400}>
               <BarChart 
                 data={proyectosData.slice(0, 10)}
-                margin={{ top: 5, right: 30, left: 20, bottom: 20 }} // Margen extra abajo
+                margin={{ top: 5, right: 30, left: 20, bottom: 20 }}
               >
                 <CartesianGrid strokeDasharray="3 3" />
                 <XAxis 
                   dataKey="Proyecto" 
                   angle={-45} 
                   textAnchor="end" 
-                  height={150}      // <--- CAMBIO CLAVE: Aumentado de 100 a 150
-                  interval={0}      // <--- CAMBIO CLAVE: Fuerza a mostrar todos
-                  tick={{fontSize: 12}} // Letra un poco más chica
+                  height={150}
+                  interval={0}
+                  tick={{fontSize: 12}}
                 />
                 <YAxis />
                 <Tooltip />
@@ -251,21 +250,21 @@ const KPIDashboard = () => {
           {/* Satisfacción del Cliente */}
           <div className="bg-white p-6 rounded-lg shadow">
             <h3 className="text-lg font-semibold mb-4">Satisfacción del Cliente</h3>
-            <ResponsiveContainer width="100%" height={400}> {/* Aumenté un poco la altura total */}
+            <ResponsiveContainer width="100%" height={400}>
               <LineChart 
                 data={proyectosData.slice(0, 10)}
-                margin={{ top: 5, right: 30, left: 20, bottom: 20 }} // Margen extra abajo
+                margin={{ top: 5, right: 30, left: 20, bottom: 20 }}
               >
                 <CartesianGrid strokeDasharray="3 3" />
                 <XAxis 
                   dataKey="Proyecto" 
                   angle={-45} 
                   textAnchor="end" 
-                  height={150}      // <--- CAMBIO CLAVE
-                  interval={0}      // <--- CAMBIO CLAVE
+                  height={150}
+                  interval={0}
                   tick={{fontSize: 12}}
                 />
-                <YAxis domain={[0, 100]} /> {/* Opcional: Fija la escala de 0 a 100 para satisfacción */}
+                <YAxis domain={[0, 100]} />
                 <Tooltip />
                 <Legend verticalAlign="top" wrapperStyle={{ paddingBottom: '20px' }} />
                 <Line 

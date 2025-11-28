@@ -139,15 +139,20 @@ def ejecutar_etl():
                     tiempos_res.append((b['fecha_solucion'] - b['fecha_deteccion']).days)
             promedio_res = sum(tiempos_res) / len(tiempos_res) if tiempos_res else 0
 
-            # KPIs de trazabilidad (requerimientos vs pruebas)
+            # KPIs de trazabilidad (requerimientos vs pruebas APROBADAS)
             reqs_proy = [r for r in todos_reqs if r['id_proyecto'] == p_id]
             total_reqs = len(reqs_proy)
             reqs_cubiertos = 0
             
             for r in reqs_proy:
-                # Busco si el requerimiento tiene pruebas
+                # 1. Busco todas las pruebas de este requerimiento
                 pruebas = [cp for cp in todos_casos if cp['id_requerimiento'] == r['id_requerimiento']]
-                if len(pruebas) > 0:
+                
+                # 2. Filtro: ¿Hay alguna prueba que tenga estado TRUE (aprobada)?
+                pruebas_exitosas = [cp for cp in pruebas if cp['estado']]
+                
+                # 3. Solo sumo si existe al menos una prueba exitosa
+                if len(pruebas_exitosas) > 0:
                     reqs_cubiertos += 1
             
             cobertura = (reqs_cubiertos / total_reqs * 100) if total_reqs > 0 else 0
