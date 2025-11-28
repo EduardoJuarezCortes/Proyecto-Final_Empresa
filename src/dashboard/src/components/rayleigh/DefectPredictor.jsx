@@ -55,7 +55,6 @@ const DefectPredictor = () => {
       <div className="bg-gradient-to-r from-red-600 to-orange-600 text-white p-6 rounded-lg shadow-lg">
         <h2 className="text-3xl font-bold mb-2">Predicción de Defectos</h2>
         <p className="text-red-100">Modelo de Distribución de Rayleigh</p>
-        <p className="text-sm text-red-100 mt-2">⚠️ Solo disponible para Responsables de Proyecto</p>
       </div>
 
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
@@ -112,15 +111,6 @@ const DefectPredictor = () => {
                 {loading ? 'Calculando...' : 'Generar Predicción'}
               </button>
             </form>
-
-            {/* Información del Modelo */}
-            <div className="mt-6 p-4 bg-blue-50 rounded-lg">
-              <h4 className="font-semibold text-blue-900 mb-2">ℹ️ Sobre el Modelo</h4>
-              <p className="text-sm text-blue-800">
-                La distribución de Rayleigh predice el patrón temporal de aparición de defectos 
-                durante el ciclo de vida del desarrollo de software.
-              </p>
-            </div>
           </div>
         </div>
 
@@ -204,15 +194,6 @@ const DefectPredictor = () => {
                     />
                   </LineChart>
                 </ResponsiveContainer>
-
-                <div className="mt-4 p-4 bg-yellow-50 rounded-lg">
-                  <h4 className="font-semibold text-yellow-900 mb-2">📊 Interpretación</h4>
-                  <ul className="text-sm text-yellow-800 space-y-1">
-                    <li>• El pico de defectos ocurre aproximadamente al 40% del ciclo de vida</li>
-                    <li>• La curva muestra la probabilidad de encontrar bugs en cada mes</li>
-                    <li>• Use esta información para planificar recursos de QA</li>
-                  </ul>
-                </div>
               </div>
             </div>
           ) : (
