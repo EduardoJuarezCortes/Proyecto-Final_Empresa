@@ -10,11 +10,13 @@ Clientes
             Casos_Prueba
 
 Fecha inicio < fecha estimada
-fecha final puede ser mayuor a la estimada para simular retrasos
+fecha final puede ser mayor a la estimada para simular retrasos
     50% proyectos terminan justo en fecha estimada
     25% antes de la fecha estimada
     25% después de la fecha estimada
 bugs y actividades debe estar dentro de fecha inicio y fecha final
+
+10% de proyectos no estan terminados
 
 70% rentabilidad media
 15% rentabilidad alta
@@ -30,19 +32,15 @@ complejidad baja => 5-10 actividades / 0-2 bugs / 3 - 5 requerimientos
 20% bugs en revisión
 10% bugs detectados
 
-10% de proyectos no estan terminados
 """
 
 
-print("""
-    ███        ▄████████ ████████▄   ███    █▄   ▄█   ▄███████▄     ▄████████ 
-▀█████████▄   ███    ███ ███    ███  ███    ███ ███  ██▀     ▄██   ███    ███ 
-   ▀███▀▀██   ███    ███ ███    ███  ███    ███ ███▌       ▄███▀   ███    ███ 
-    ███   ▀   ███    ███ ███    ███  ███    ███ ███▌  ▀█▀▄███▀▄▄   ███    ███ 
-    ███     ▀███████████ ███    ███  ███    ███ ███▌   ▄███▀   ▀ ▀███████████ 
-    ███       ███    ███ ███    ███  ███    ███ ███  ▄███▀         ███    ███ 
-    ███       ███    ███ ███  ▀ ███  ███    ███ ███  ███▄     ▄█   ███    ███ 
-   ▄████▀     ███    █▀   ▀██████▀▄█ ████████▀  █▀    ▀████████▀   ███    █▀  
+print("""                                              .___       __                
+   ____   ____   ____   ________________ _______    __| _/____ _/  |_  ____  ______
+  / ___\_/ __ \ /    \_/ __ \_  __ \__  \\_  __ \  / __ |\__  \\   __\/  _ \/  ___/
+ / /_/  >  ___/|   |  \  ___/|  | \// __ \|  | \/ / /_/ | / __ \|  | (  <_> )___ \ 
+ \___  / \___  >___|  /\___  >__|  (____  /__|    \____ |(____  /__|  \____/____  >
+/_____/      \/     \/     \/           \/             \/     \/                \/ 
 """)
 
 ## --------------------------------------------------------------------------------------------------------
