@@ -1,0 +1,9 @@
+[submodule "src/Backend-Rayleigh"]
+	path = src/Backend-Rayleigh
+	url = https://github.com/ulisestc/Backend-Rayleigh.git
+[submodule "src/Dashboard-IN-FINAL"]
+	path = src/Dashboard-IN-FINAL
+	url = https://github.com/ulisestc/Dashboard-IN-FINAL.git
+[submodule "src/Backend-Dashboard"]
+	path = src/Backend-Dashboard
+	url = https://github.com/AlfredoRiveraaa/Backend-Dashboard.git
